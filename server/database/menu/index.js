@@ -27,4 +27,4 @@ const MenueSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export const MenuModel = mongoose.model("menus", MenuSchema)
+export const MenuModel = mongoose.model("menus", MenueSchema)

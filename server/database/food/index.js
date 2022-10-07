@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const FoodSchema = new mongoose.Schema({
-    name: { type: string, required: true },
-    descript: { type: string, required: true },
+    name: { type: String, required: true },
+    descript: { type: String, required: true },
     isVeg: { type: Boolean, required: true },
     isConatinsEgg: { type: Boolean, required: true },
     category: { type: Boolean, required: true },
