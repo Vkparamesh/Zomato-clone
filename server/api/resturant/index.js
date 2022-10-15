@@ -3,12 +3,14 @@ import express from "express";
 const Router = express.Router();
 
 import { RestaurantModel } from "../../database/restaurant";
+import { validaeteSearchString, validaetRestaruntcity } from "../../validation/restaruntvalidation";
 
 
 
 Router.get('/', async (req, res) => {
     try {
         const { city } = req.params;
+        await validaetRestaruntcity(req.params)
         const restaurant = await RestaurantModel.find({ city })
         if (restaurant.length === 0) {
             return res.json({ error: "NO restaurent found in this city" })
@@ -37,6 +39,7 @@ Router.get("/:id", async (req, res) => {
 Router.get("/search/:searchString", async (req, res) => {
     try {
         const { searchString } = req.params;
+        await validaeteSearchString(req.params)
         const restaurants = await RestaurantModel.find({
             name: {
                 $regex: searchString, $options: "i"
@@ -52,7 +55,21 @@ Router.get("/search/:searchString", async (req, res) => {
     }
 })
 
+Router.post('/new', async (req, res) => {
+    try {
+        const { restaurant } = req.body;
+
+        const newrestarunt = await RestaurantModel.create({ restaurant })
+        return res.json({ message: "Review success fully deleted", newrestarunt })
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+})
+
 
 
 
 export default Router;
+
+

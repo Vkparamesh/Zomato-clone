@@ -4,17 +4,23 @@ import Auth from "./api/auth"
 import food from "./api/food"
 import restaurant from "./api/resturant";
 import user from "./api/user"
+import Menu from "./api/menu"
+import order from "./api/order"
+import review from "./api/review"
+import image from "./api/images"
 
 const session = require("express-session")
 import passport from 'passport';
 
 import privateRouteConfig from "./config/route.config"
+import googleAuthConfig from "./config/google.config"
 
 
 
 import ConnectDB from "./database/Connection"
 dotenv.config()
 privateRouteConfig(passport)
+googleAuthConfig(passport)
 
 const zomato = express();
 
@@ -34,7 +40,11 @@ zomato.get("/", (req, res) => {
 zomato.use("/auth", Auth);
 zomato.use('/food', food)
 zomato.use('/restaurant', restaurant)
-zomato.use('/user', passport.authenticate('jwt', { session: false }), user)
+zomato.use('/user', user)
+zomato.use('/menu', Menu)
+zomato.use('/order', order)
+zomato.use('/rewiew', review)
+zomato.use("/image", image)
 
 zomato.listen(4000, () => {
     ConnectDB().then(() => {
