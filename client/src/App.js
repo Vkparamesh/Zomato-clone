@@ -17,15 +17,17 @@ import OrderOnline from "./componentes/Restarunt/OrderOnline"
 import Overview from "./componentes/Restarunt/Overview"
 import Photos from "./componentes/Restarunt/Photos"
 import Reviews from "./componentes/Restarunt/Reviews"
+import RestaurantLayout from './layout/Restaurant_layout';
 
 function App() {
   return <>
     <Routes>
-      <Route path='/ ' element={<Navigate to='/delivery' />} />
+      <Route path='/' element={<Navigate to='/delivery' />} />
       <Route path='/:type' element={<Home />} />
       {/* <Route path='/restaurant/:id' element={<RedirectRestarunt />} /> */}
       <Route path='/google/:token' element={<GoogleAuth />} />
-      <Route path='/restarunt/:id' element={< Restaurant />}>
+      <Route path='/restaurant/:id' element={<RestaurantLayout><Restaurant />
+      </RestaurantLayout>}>
         <Route path='overview' element={<Overview />} />
         <Route path='order-online' element={<OrderOnline />} />
         <Route path='review' element={<Reviews />} />

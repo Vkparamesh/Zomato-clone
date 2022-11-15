@@ -5,9 +5,17 @@ import { HiLocationMarker } from "react-icons/hi"
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io"
 import { RiSearch2Line } from "react-icons/ri"
 
-
-
-const MobileNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen }) => {
+import Signin from '../Auth/Signin';
+import Signup from '../Auth/Signup';
+const MobileNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen, Signin, Signup }) => {
+    const signIn = () => {
+        Signin()
+        setIsDropdownOpen(false)
+    }
+    const signUp = () => {
+        Signup()
+        setIsDropdownOpen(false)
+    }
 
     return <>
         <div className='flex w-full  items-center justify-between lg:hidden ' >
@@ -36,8 +44,8 @@ const MobileNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen }) => {
 
                         {IsDropdownOpen && (
                             <div className='absolute shadow-lg py-3 -bottom-24 bg-white border border-gray-200 -right-0 w-36 z-20 flex flex-col gap-2' >
-                                <button>sign In</button>
-                                <button>sign Up</button>
+                                <button onClick={signIn} >sign In</button>
+                                <button onClick={signUp}>sign Up</button>
                             </div>
                         )}
                     </>
@@ -49,7 +57,19 @@ const MobileNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen }) => {
 }
 
 
-const LargNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen }) => {
+const LargNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen, Signin, Signup }) => {
+
+    const signIn = () => {
+        Signin()
+        setIsDropdownOpen(false)
+    }
+    const signUp = () => {
+        Signup()
+        setIsDropdownOpen(false)
+    }
+
+
+
     return <>
         <div className='w-full  items-center justify-between hidden lg:flex px-14 ' >
             <div className='gap-4  items-center justify-around flex '>
@@ -89,8 +109,8 @@ const LargNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen }) => {
 
                         {IsDropdownOpen && (
                             <div className='absolute shadow-lg py-3 -bottom-24 bg-white border border-gray-200 -right-0 w-36 z-20 flex flex-col gap-2' >
-                                <button>sign In</button>
-                                <button>sign Up</button>
+                                <button onClick={signIn} >sign In</button>
+                                <button onClick={signUp}>sign Up</button>
                             </div>
                         )}
                     </>
@@ -102,14 +122,28 @@ const LargNavbar = ({ user, IsDropdownOpen, setIsDropdownOpen }) => {
 }
 
 const Navbar = () => {
+    const [openSignIn, setIsOpenSignIn] = useState(false)
+    const [openSignUp, setIsOpenSignUp] = useState(false)
+    const openSigInModal = () => setIsOpenSignIn(true)
+    const openSingUpModal = () => setIsOpenSignUp(true)
+
+
+
     const [IsDropdownOpen, setIsDropdownOpen] = useState(false);
     const user = {
-        fullname: "vk"
+        // fullname: "vk"
     }
     return <>
+
+        <Signin isOpen={openSignIn} setIsOpen={setIsOpenSignIn} />
+        <Signup isOpen={openSignUp} setIsOpen={setIsOpenSignUp} />
+
         <nav className='p-4 lg:py-2 flex bg-white shadow-md lg:shadow-none  lg:border-b-2 border-gray-100 w-full items-center'>
-            <MobileNavbar user={user} setIsDropdownOpen={setIsDropdownOpen} IsDropdownOpen={IsDropdownOpen} />
-            <LargNavbar user={user} setIsDropdownOpen={setIsDropdownOpen} IsDropdownOpen={IsDropdownOpen} />
+            <MobileNavbar user={user} setIsDropdownOpen={setIsDropdownOpen} IsDropdownOpen={IsDropdownOpen}
+                Signin={openSigInModal}
+                Signup={openSingUpModal} />
+            <LargNavbar user={user} setIsDropdownOpen={setIsDropdownOpen} IsDropdownOpen={IsDropdownOpen} Signin={openSigInModal}
+                Signup={openSingUpModal} />
         </nav>
     </>
 }
